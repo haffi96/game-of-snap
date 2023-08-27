@@ -3,14 +3,14 @@ from typing import NamedTuple
 from enum import Enum
 
 
-class Suits(Enum):
+class Suit(Enum):
     HEARTS = "Hearts"
     DIAMONDS = "Diamonds"
     CLUBS = "Clubs"
     SPADES = "Spades"
 
 
-class Ranks(Enum):
+class Rank(Enum):
     TWO = "2"
     THREE = "3"
     FOUR = "4"
@@ -27,8 +27,8 @@ class Ranks(Enum):
 
 
 class Card(NamedTuple):
-    suit: Suits
-    rank: Ranks
+    suit: Suit
+    rank: Rank
 
     def __repr__(self):
         return f"{self.rank.value} of {self.suit.value}"
@@ -61,8 +61,8 @@ def create_deck(num_decks):
     deck = [
         Card(suit=suit, rank=value)
         for _ in range(num_decks)
-        for suit in Suits
-        for value in Ranks
+        for suit in Suit
+        for value in Rank
     ]
     random.shuffle(deck)
     return deck

@@ -1,7 +1,7 @@
 from snap import (
     Card,
-    Suits,
-    Ranks,
+    Suit,
+    Rank,
     Player,
     add_cards_to_winners_pile,
     any_player_has_face_down_cards,
@@ -14,20 +14,20 @@ import pytest
 @pytest.mark.parametrize(
     "suit, rank, expected",
     [
-        (Suits.HEARTS, Ranks.ACE, "Ace of Hearts"),
-        (Suits.SPADES, Ranks.TWO, "2 of Spades"),
-        (Suits.DIAMONDS, Ranks.KING, "King of Diamonds"),
-        (Suits.CLUBS, Ranks.QUEEN, "Queen of Clubs"),
+        (Suit.HEARTS, Rank.ACE, "Ace of Hearts"),
+        (Suit.SPADES, Rank.TWO, "2 of Spades"),
+        (Suit.DIAMONDS, Rank.KING, "King of Diamonds"),
+        (Suit.CLUBS, Rank.QUEEN, "Queen of Clubs"),
     ],
 )
-def test_card_representation(suit: Suits, rank: Ranks, expected: str) -> None:
+def test_card_representation(suit: Suit, rank: Rank, expected: str) -> None:
     card = Card(suit=suit, rank=rank)
     assert repr(card) == expected
 
 
 def test_next_turn():
     player = Player(name="Test Player")
-    player.face_down_cards = [Card(suit=Suits.DIAMONDS, rank=Ranks.THREE)]
+    player.face_down_cards = [Card(suit=Suit.DIAMONDS, rank=Rank.THREE)]
     assert len(player.face_up_cards) == 0
     player.next_turn()
     assert len(player.face_up_cards) == 1
@@ -36,7 +36,7 @@ def test_next_turn():
 
 def test_top_card():
     player = Player(name="Test Player")
-    mock_card = Card(suit=Suits.CLUBS, rank=Ranks.FOUR)
+    mock_card = Card(suit=Suit.CLUBS, rank=Rank.FOUR)
     player.face_up_cards = [mock_card]
     assert player.top_card() == mock_card
 
@@ -45,8 +45,8 @@ def test_add_cards_to_winners_pile() -> None:
     player_one = Player(name="Test Player One")
     player_two = Player(name="Test Player Two")
 
-    mock_card_one = [Card(suit=Suits.HEARTS, rank=Ranks.TWO)]
-    mock_card_two = [Card(suit=Suits.DIAMONDS, rank=Ranks.THREE)]
+    mock_card_one = [Card(suit=Suit.HEARTS, rank=Rank.TWO)]
+    mock_card_two = [Card(suit=Suit.DIAMONDS, rank=Rank.THREE)]
 
     player_one.face_up_cards = mock_card_one
     player_two.face_up_cards = mock_card_two
@@ -89,7 +89,7 @@ def test_deal_cards() -> None:
 @pytest.mark.parametrize(
     "mock_cards, expected",
     [
-        ([Card(suit=Suits.CLUBS, rank=Ranks.TWO)], True),
+        ([Card(suit=Suit.CLUBS, rank=Rank.TWO)], True),
         ([], False),
     ],
 )
